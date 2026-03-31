@@ -1,0 +1,12 @@
+# Chặn file chứa API Key/Token 
+.env
+# Chặn các file rác của Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+env/
+# Chặn file cấu hình của hệ điều hành
+.DS_Store
+Thumbs.db

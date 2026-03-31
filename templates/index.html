@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web AI - Văn Lang</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            text-align: center;
+        }
+
+        .container {
+            width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        img {
+            width: 120px;
+        }
+
+        input {
+            width: 70%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #chatbox {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .user {
+            color: blue;
+        }
+
+        .bot {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <img src="{{ url_for('static', filename='photo.png') }}" alt="Logo Văn Lang">
+    <h2>🤖 Web AI Chatbot</h2>
+    <p>Đồ Án Cuối Kỳ - Đại học Văn Lang</p>
+
+    <input type="text" id="message" placeholder="Nhập câu hỏi...">
+    <button onclick="sendMessage()">Gửi</button>
+
+    <div id="chatbox"></div>
+</div>
+
+<script>
+async function sendMessage() {
+    let message = document.getElementById("message").value;
+
+    let chatbox = document.getElementById("chatbox");
+    chatbox.innerHTML += `<p class="user"><b>Bạn:</b> ${message}</p>`;
+
+    let res = await fetch("/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message })
+    });
+
+    let data = await res.json();
+
+    chatbox.innerHTML += `<p class="bot"><b>AI:</b> ${data.reply}</p>`;
+
+    document.getElementById("message").value = "";
+}
+</script>
+
+</body>
+</html>
