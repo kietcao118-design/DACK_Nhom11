@@ -111,19 +111,17 @@
 <script>
 async function sendMessage() {
     let messageInput = document.getElementById("message");
-    let message = messageInput.value.trim(); // .trim() để bỏ khoảng trắng thừa
+    let message = messageInput.value.trim(); 
     
-    if(!message) return; // Nếu không nhập gì thì không gửi
+    if(!message) return; 
 
     let chatbox = document.getElementById("chatbox");
     
-    // 1. Hiển thị tin nhắn của bạn lên màn hình ngay
+
     chatbox.innerHTML += `<div class="user"><b>Bạn:</b> ${message}</div>`;
 
-    // 2. QUAN TRỌNG: Xóa chữ trong ô nhập liệu NGAY LẬP TỨC sau khi gửi
     messageInput.value = ""; 
 
-    // 3. Gọi AI xử lý (chạy ngầm)
     try {
         let res = await fetch("/chat", {
             method: "POST",
@@ -135,10 +133,8 @@ async function sendMessage() {
 
         let data = await res.json();
         
-        // 4. Khi AI trả lời thì mới hiện ra
         chatbox.innerHTML += `<div class="bot"><b>AI:</b> ${data.reply}</div>`;
         
-        // Tự động cuộn xuống dưới cùng để thấy câu trả lời của AI
         let container = document.querySelector(".container");
         container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
 
@@ -148,10 +144,9 @@ async function sendMessage() {
     }
 }
 
-// Lắng nghe sự kiện nhấn phím Enter
 document.getElementById("message").addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
-        event.preventDefault(); // Ngăn việc load lại trang (nếu có form)
+        event.preventDefault(); 
         sendMessage();
     }
 });
