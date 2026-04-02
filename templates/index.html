@@ -1,156 +1,215 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <title>Web AI - Văn Lang</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web AI - Văn Lang (Nhóm 11)</title>
     <style>
-        
+        :root {
+            --vlu-red: #D32F2F;
+            --bg-blue: #7DA0CA;
+            --user-msg: #E3F2FD;
+            --bot-msg: #F1F8E9;
+            --text-dark: #333;
+        }
+
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-blue); /* Màu xanh nền */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .container {
-            width: 100vw;       
-            height: 100vh;     
+            width: 90%;
+            max-width: 950px; 
+            height: 85vh;
+            background: white;
+            padding: 20px; 
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            align-items: center;  
-            background: white;
-            padding: 40px;      
-            box-sizing: border-box; 
-            overflow-y: auto;   
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            position: relative;
         }
 
-        img {
-            width: 150px;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            margin: 10px 0;
-        }
-
-   
-        .input-group {
+        .header {
             width: 100%;
-            max-width: 800px;  
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            align-items: center; 
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
         }
 
-        input {
-            flex: 1;           
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
+        .logo-container {
+            flex: 0 0 180px;
+            margin-right: 20px;
+            display: flex;
+            align-items: center; 
         }
-
-        button {
-            padding: 0 25px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s;
+        .logo {
+            width: 100%; 
+            height: auto;
+            transition: transform 0.3s;
         }
+        .logo:hover { transform: scale(1.05); }
 
-        button:hover {
-            background: #0056b3;
+        .title-container {
+            flex: 1; 
+            text-align: center; 
         }
+        h2 { margin: 5px 0; color: var(--text-dark); font-size: 24px; }
+        .sub-title { color: #666; margin: 0; font-weight: 500; font-size: 14px; }
 
-     
         #chatbox {
+            flex: 1;
             width: 100%;
-            max-width: 800px;    
-            margin-top: 30px;
-            text-align: left;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+        }
+
+        #chatbox:empty::after {
+            content: "Sẵn sàng nhận câu hỏi. Hãy nhập bên dưới...";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ccc;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            font-size: 15px;
+            line-height: 1.5;
+            word-wrap: break-word;
         }
 
         .user {
-            color: #0056b3;
-            background: #e7f3ff;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            align-self: flex-end;
+            background-color: var(--user-msg);
+            color: #0D47A1;
+            border-bottom-right-radius: 2px;
+            border: 1px solid #BBDEFB;
         }
 
         .bot {
-            color: #1e7e34;
-            background: #f0fff4;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            align-self: flex-start;
+            background-color: var(--bot-msg);
+            color: #1B5E20;
+            border-bottom-left-radius: 2px;
+            border: 1px solid #C8E6C9;
         }
+
+        .input-group {
+            width: 100%;
+            display: flex;
+            gap: 10px;
+            padding-top: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #E0E0E0;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus { border-color: var(--bg-blue); }
+
+        button {
+            padding: 0 25px;
+            background-color: var(--vlu-red); 
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s;
+            white-space: nowrap; 
+        }
+
+        button:hover {
+            background-color: #B71C1C;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        #chatbox::-webkit-scrollbar { width: 6px; }
+        #chatbox::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img src="{{ url_for('static', filename='photo.png') }}" alt="Logo Văn Lang">
-    <h2>🤖 Web AI Chatbot</h2>
-    <p>Đồ Án Cuối Kỳ - Đại học Văn Lang</p>
-
-    <div class="input-group">
-        <input type="text" id="message" placeholder="Nhập câu hỏi tại đây...">
-        <button onclick="sendMessage()">Gửi</button>
+    <div class="header">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='photo.png') }}" alt="VLU Logo" class="logo">
+        </div>
+        <div class="title-container">
+            <h2>🤖 Web AI Chatbot</h2>
+            <p class="sub-title">Đồ Án Cuối Kỳ - Nhóm Eleven </p>
+        </div>
     </div>
 
-    <div id="chatbox"></div>
+    <div id="chatbox">
+        </div>
+
+    <div class="input-group">
+        <input type="text" id="message" placeholder="Hỏi AI bất cứ điều gì..." autofocus>
+        <button onclick="sendMessage()">Gửi ngay</button>
+    </div>
 </div>
 
 <script>
 async function sendMessage() {
-    let messageInput = document.getElementById("message");
-    let message = messageInput.value.trim(); 
+    const messageInput = document.getElementById("message");
+    const message = messageInput.value.trim();
+    if (!message) return;
+
+    const chatbox = document.getElementById("chatbox");
     
-    if(!message) return; 
-
-    let chatbox = document.getElementById("chatbox");
-    
-
-    chatbox.innerHTML += `<div class="user"><b>Bạn:</b> ${message}</div>`;
-
-    messageInput.value = ""; 
+    chatbox.innerHTML += `<div class="user message"><b>Bạn:</b> ${message}</div>`;
+    messageInput.value = "";
+    chatbox.scrollTop = chatbox.scrollHeight;
 
     try {
-        let res = await fetch("/chat", {
+        const res = await fetch("/chat", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message })
         });
-
-        let data = await res.json();
+        const data = await res.json();
         
-        chatbox.innerHTML += `<div class="bot"><b>AI:</b> ${data.reply}</div>`;
-        
-        let container = document.querySelector(".container");
-        container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+        chatbox.innerHTML += `<div class="bot message"><b>AI:</b> ${data.reply}</div>`;
+        chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
 
     } catch (error) {
-        console.error("Lỗi kết nối:", error);
-        chatbox.innerHTML += `<div class="bot" style="color: red;"><b>Lỗi:</b> Không thể kết nối với server!</div>`;
+        chatbox.innerHTML += `<div class="bot message" style="color: red;"><b>Lỗi:</b> Không kết nối được server!</div>`;
     }
 }
-
-document.getElementById("message").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-        event.preventDefault(); 
-        sendMessage();
-    }
+document.getElementById("message").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") sendMessage();
 });
 </script>
-
 </body>
 </html>
