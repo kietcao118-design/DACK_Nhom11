@@ -25,7 +25,7 @@ def chat():
         response = client.chat.completions.create(
            model="Qwen/Qwen2.5-7B-Instruct",
             messages=[
-                {"role": "system", "content": "Bạn là trợ lý ảo hữu ích của Nhóm 11. Trả lời bằng tiếng Việt."},
+                {"role": "system", "content": "Bạn là trợ lý ảo hữu ích của Nhóm Eleven. Trả lời bằng tiếng Việt."},
                 {"role": "user", "content": user_message}
             ],
             max_tokens=500
