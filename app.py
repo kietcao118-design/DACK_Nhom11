@@ -23,7 +23,7 @@ def chat():
         if not user_message:
             return jsonify({"reply": "Vui lòng nhập câu hỏi!"})
         response = client.chat.completions.create(
-            model="Qwen/Qwen2.5-72B-Instruct",
+           model="Qwen/Qwen2.5-7B-Instruct",
             messages=[
                 {"role": "system", "content": "Bạn là trợ lý ảo hữu ích của Nhóm 11. Trả lời bằng tiếng Việt."},
                 {"role": "user", "content": user_message}
